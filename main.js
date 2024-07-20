@@ -66,15 +66,21 @@ if (reddit) {
 
 // Protection
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'F12' || 
-      (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-      (e.ctrlKey && e.shiftKey && e.key === 'J') || 
-      (e.ctrlKey && e.key === 'U')) {
-      e.preventDefault();
-      return false;
-  }
-});
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+          e.preventDefault();
+          alert('Right-click is disabled on this site.');
+      });
+
+      // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+      document.addEventListener('keydown', function(e) {
+          if (e.key === 'F12' || 
+              (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+              (e.ctrlKey && e.key === 'U')) {
+              e.preventDefault();
+              alert('Developer tools are disabled on this site.');
+          }
+      });
 
 document.addEventListener('contextmenu', function(e) {
   e.preventDefault();
@@ -87,11 +93,17 @@ document.addEventListener('keydown', function(e) {
 });
 
 (function() {
-  const element = new Image();
-  Object.defineProperty(element, 'id', {
-      get: function() {
-          window.location = 'about:blank'; // Redirect or take any other action
+  const threshold = 160; // Threshold for detecting developer tools
+  const checkInterval = 1000; // Check every second
+
+  function detectDevTools() {
+      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+      if (widthThreshold || heightThreshold) {
+          alert('Developer tools are open. This action is not allowed.');
+          // You can take additional actions like redirecting or logging out the user
       }
-  });
-  console.log(element);
+  }
+
+  setInterval(detectDevTools, checkInterval);
 })();
