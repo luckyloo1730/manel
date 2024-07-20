@@ -114,12 +114,107 @@ document.addEventListener('keydown', function(e) {
           return /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent);
       }
 
-      // Block Microsoft Edge
-      if (isEdge()) {
-          // Redirect to a different page or display a message
-          document.write('<h1>Access Denied</h1><p>This website does not support Microsoft Edge. Please use a different browser.</p>');
-          document.body.style.display = 'none'; // Hide the rest of the content
-          setTimeout(function() {
-              document.body.style.display = 'block'; // Show the message after hiding content
-          }, 100);
+        // Function to detect Microsoft Edge
+        function isEdge() {
+          return /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent);
       }
+
+      // Function to block access
+      function blockAccess() {
+          document.body.innerHTML = '<h1>Access Denied</h1><p>This website does not support Microsoft Edge. Please use a different browser.</p>';
+          document.body.classList.add('blocked');
+
+          // Disable all key events
+          document.addEventListener('keydown', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('keypress', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('keyup', function(e) {
+              e.preventDefault();
+          });
+
+          // Disable right-click context menu
+          document.addEventListener('contextmenu', function(e) {
+              e.preventDefault();
+          });
+
+          // Disable mouse events
+          document.addEventListener('mousedown', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('mouseup', function(e) {
+              e.preventDefault();
+          });
+
+          // Disable all other events
+          document.addEventListener('click', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('dblclick', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('mousemove', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('mouseover', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('mouseout', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('mouseenter', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('mouseleave', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('touchstart', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('touchend', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('touchmove', function(e) {
+              e.preventDefault();
+          });
+
+          document.addEventListener('touchcancel', function(e) {
+              e.preventDefault();
+          });
+      }
+
+      // Check for Microsoft Edge and block access
+      if (isEdge()) {
+          blockAccess();
+      }
+
+      // Periodically check for developer tools
+      setInterval(function() {
+          if (window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100) {
+              blockAccess();
+          }
+      }, 1000);
+
+      // Additional check for F12 and other dev tools shortcuts
+      document.addEventListener('keydown', function(e) {
+          if (e.key === 'F12' || 
+              (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+              (e.ctrlKey && e.key === 'U')) {
+              e.preventDefault();
+              blockAccess();
+          }
+      });
