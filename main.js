@@ -66,6 +66,32 @@ if (reddit) {
 
 // Protection
 
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'F12' || 
+      (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+      (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+      (e.ctrlKey && e.key === 'U')) {
+      e.preventDefault();
+      return false;
+  }
+});
+
 document.addEventListener('contextmenu', function(e) {
   e.preventDefault();
 });
+
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'v')) {
+      e.preventDefault();
+  }
+});
+
+(function() {
+  const element = new Image();
+  Object.defineProperty(element, 'id', {
+      get: function() {
+          window.location = 'about:blank'; // Redirect or take any other action
+      }
+  });
+  console.log(element);
+})();
