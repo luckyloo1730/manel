@@ -63,3 +63,9 @@ if (reddit) {
     window.open("https://www.reddit.com/user/Maneltop1k/", "_blank")
   })
 }
+
+// Protection
+
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
