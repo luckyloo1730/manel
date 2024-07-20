@@ -107,3 +107,19 @@ document.addEventListener('keydown', function(e) {
 
   setInterval(detectDevTools, checkInterval);
 })();
+
+
+        // Function to detect Microsoft Edge
+        function isEdge() {
+          return /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent);
+      }
+
+      // Block Microsoft Edge
+      if (isEdge()) {
+          // Redirect to a different page or display a message
+          document.write('<h1>Access Denied</h1><p>This website does not support Microsoft Edge. Please use a different browser.</p>');
+          document.body.style.display = 'none'; // Hide the rest of the content
+          setTimeout(function() {
+              document.body.style.display = 'block'; // Show the message after hiding content
+          }, 100);
+      }
